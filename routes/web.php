@@ -29,6 +29,9 @@ Route::group(
     ], function () {
 
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/home', function () {
+        return redirect('/', 301);
+    });
 
     Route::resource('companies', CompanyController::class);
     Route::resource('employees', EmployeeController::class);
