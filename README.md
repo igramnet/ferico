@@ -13,7 +13,7 @@
 10) Использовать AdminLTE тему в качестве фронденда
 11) Сделать мультиязычное приложение (Русский и английский язык)
 
-### Star
+### Start
 
 1. Config .env file. You can use env.example
 2. php artisan migrate
