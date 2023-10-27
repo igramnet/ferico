@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\Employees;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -48,6 +49,7 @@ class EmployeesDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
+            ->language(__(LaravelLocalization::getCurrentLocale()))
             ->setTableId('employees-table')
             ->columns($this->getColumns())
             ->minifiedAjax()

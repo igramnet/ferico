@@ -86,5 +86,6 @@
         </main>
     </div>
     @stack('scripts')
+    <script src="{{ asset('js/ru.js') }}"></script>
 </body>
 </html>

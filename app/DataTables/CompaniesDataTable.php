@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\Company;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -23,10 +24,10 @@ class CompaniesDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($company) {
-                return '<a href="'.route('companies.edit', $company->id).'" class="btn btn-warning">Редактировать</a>
-                <form method="POST" action="'.route('companies.destroy', $company->id).'" style="display:inline">
-                    '.csrf_field().'
-                    '.method_field('DELETE').'
+                return '<a href="' . route('companies.edit', $company->id) . '" class="btn btn-warning">Редактировать</a>
+                <form method="POST" action="' . route('companies.destroy', $company->id) . '" style="display:inline">
+                    ' . csrf_field() . '
+                    ' . method_field('DELETE') . '
                     <button type="submit" class="btn btn-danger">Удалить</button>
                 </form>';
             })
@@ -48,20 +49,21 @@ class CompaniesDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('companies-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    //->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    ]);
+            ->language(__(LaravelLocalization::getCurrentLocale()))
+            ->setTableId('companies-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            //->dom('Bfrtip')
+            ->orderBy(1)
+            ->selectStyleSingle()
+            ->buttons([
+                Button::make('excel'),
+                Button::make('csv'),
+                Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            ]);
     }
 
     /**
