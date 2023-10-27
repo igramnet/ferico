@@ -1,6 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\EmployeeController;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,14 +17,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Auth::routes();
+
+LaravelLocalization::setLocale('en');
+
+/** ADD ALL LOCALIZED ROUTES INSIDE THIS GROUP **/
+Route::group(
+    [
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => ['localizationRedirect', 'localeViewPath']
+    ], function () {
+
+    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+    Route::resource('companies', CompanyController::class);
+    Route::resource('employees', EmployeeController::class);
+
+    Route::post('companies', [CompanyController::class, 'store'])->name('companies.store.ajax');
+    Route::put('companies/{id}', [CompanyController::class, 'update'])->name('companies.update.ajax');
+
+    Route::post('employees', [EmployeeController::class, 'store'])->name('employees.store.ajax');
+    Route::put('employees/{id}', [EmployeeController::class, 'update'])->name('employees.update.ajax');
+
 });
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

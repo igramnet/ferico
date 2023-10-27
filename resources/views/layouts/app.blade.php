@@ -12,6 +12,8 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js" type="text/javascript"></script>
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -30,9 +32,16 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-
+                        <li class="nav-item"><a class="nav-link" href="{{ route('companies.index') }}">Companies</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('employees.index') }}">Employees</a></li>
                     </ul>
-
+                    <ul class="navbar-nav ms-auto">
+                    @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                        <div class="nav-item">
+                            <a class="nav-link @if(LaravelLocalization::getCurrentLocale() === $localeCode) active @endif" rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], false) }}">{{ $localeCode }}</a>
+                        </div>
+                    @endforeach
+                    </ul>
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
