@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\EmployeesDataTable;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\DataTables\CompaniesDataTable;
 
 class CompanyController extends Controller
 {
-    public function index(): object
+
+    public function index(CompaniesDataTable $dataTable): object
     {
-        return view('companies.index', [
+        return $dataTable->render('companies.index', [
             'companies' => Company::all(),
         ]);
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\EmployeesDataTable;
 use Illuminate\Http\Request;
 use App\Models\Employees;
 use App\Models\Company;
@@ -9,11 +10,10 @@ use Illuminate\Support\Facades\Validator;
 
 class EmployeeController extends Controller
 {
-    public function index(): object
+
+    public function index(EmployeesDataTable $dataTable): object
     {
-        return view('employees.index', [
-            'employees' => Employees::with('company')->get(),
-        ]);
+        return $dataTable->render('employees.index');
     }
 
     public function create(): object
